@@ -11,6 +11,12 @@ const {
 
 paymentRouter.post("/payment/create", userAuth, async (req, res) => {
   try {
+    if (!razorpayInstance) {
+      return res.status(503).json({
+        msg: "Payment service is not configured. Please contact support.",
+      });
+    }
+
     const { membershipType } = req.body;
     const { firstName, lastName, emailId } = req.user;
 
